@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage ('checkout'){
             steps {
-                git url: 'https://github.com/juht/calculator.git'
+                git url: 'https://github.com/trandmore/calculator2.git'
             }
         }
         stage ('Compile'){
@@ -47,24 +47,24 @@ pipeline {
         }
         stage ("Docker build") {
             steps {
-                sh "docker build -t localhost:5000/juht/calculator ."
+                sh "docker build -t localhost:5000/trandmore/calculator ."
             }
         }
         stage ("Docker push"){
             steps {
-                sh "docker push localhost:5000/juht/calculator"
+                sh "docker push localhost:5000/trandmore/calculator"
             }
         }
         stage ("Deploy to staging"){
             steps {
                 /*sh "docker run -d --rm -p 8090:8090 \
-                    --name calculator localhost:5000/juht/calculator"*/
+                    --name calculator localhost:5000/trandmore/calculator"*/
 		sh "docker-compose up -d"
             }
         }
         stage ("Acceptance Test"){
             steps {
-                sleep 60
+                sleep 20
                 sh "./acceptance_test.sh"
             }
         }
